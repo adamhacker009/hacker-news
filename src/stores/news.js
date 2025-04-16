@@ -4,14 +4,14 @@ import { api } from '@/assets/js/index.js'
 import { useCommentsStore } from '@/stores/comments.js'
 
 export const useNewsStore = defineStore('news', () => {
-  const news = ref([])
+  const newsIds = ref([])
   const { getComments } = useCommentsStore()
 
   const getNews = async () => {
-    news.value = await api.get(`newstories.json`).then((res) => res.data)
+    newsIds.value = await api.get(`newstories.json`).then((res) => res.data)
   }
 
-  const article = ref([])
+  const article = ref({})
 
   const getArticle = async (id) => {
     const response = await api.get(`item/${id}.json`)
@@ -23,8 +23,8 @@ export const useNewsStore = defineStore('news', () => {
 
   const getArticleSlim = async (id) => {
     const response = await api.get(`item/${id}.json`)
-    article.value.push(response.data)
+    return response.data
   }
 
-  return { news, getNews, article, getArticle, getArticleSlim }
+  return { newsIds, getNews, article, getArticle, getArticleSlim }
 })

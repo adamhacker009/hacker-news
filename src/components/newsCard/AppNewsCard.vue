@@ -1,22 +1,23 @@
 <template>
   <div class="container mb-2">
-    {{ article }}
+    {{ currentArticle }}
   </div>
 </template>
 
 <style scoped></style>
 
 <script setup>
-import { storeToRefs } from 'pinia'
-import { computed, onMounted } from 'vue'
 import { useNewsStore } from '@/stores/index.js'
+import { ref } from 'vue'
+// import { dateFormater } from '@/shared/index.js'
 
-const { article } = storeToRefs(useNewsStore())
 const { getArticleSlim } = useNewsStore()
 
 const props = defineProps({ articleId: Number })
 
-const currentArticle = computed(() => article[props.articleId])
-
-onMounted(() => {})
+const currentArticle = ref()
+const initialArticle = async () => {
+  currentArticle.value = await getArticleSlim(props.articleId)
+}
+initialArticle()
 </script>
