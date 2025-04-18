@@ -34,7 +34,7 @@ onMounted(() => {
     </div>
     <a
       v-if="article.url"
-      class="mt-4 rounded p-2 text-gray-50 bg-emerald-500"
+      class="mt-4 rounded p-2 text-gray-50 bg-blue-800"
       :href="`${article.url}`"
     >
       Original post
@@ -43,11 +43,8 @@ onMounted(() => {
       {{ dateFormater(article.time) }}
     </p>
     <div class="text-lg mt-2 mb-2" v-html="article.text"></div>
-
     <div v-if="comments">
-      <div v-for="comment in comments">
-        <news-comment :comment="comment"></news-comment>
-      </div>
+      <news-comment v-for="comment in comments" :comment="comment" />
     </div>
   </div>
 </template>
