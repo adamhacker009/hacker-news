@@ -31,10 +31,10 @@ const initialArticle = async () => {
   currentArticle.value = await getArticleSlim(props.articleId)
 }
 initialArticle()
-setInterval(() => {
+const updateArticle = setInterval(() => {
   if (props.isLoad) initialArticle()
 }, 60000)
 onUnmounted(() => {
-  clearInterval(initialArticle)
+  clearInterval(updateArticle)
 })
 </script>
