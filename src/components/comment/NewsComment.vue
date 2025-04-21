@@ -5,7 +5,7 @@
     </h4>
     <h4 class="text-2xl">{{ dateFormater(props.comment.time) }}</h4>
     <p class="text-xl break-words">{{ props.comment.text }}</p>
-    <button v-if="props.comment.kids && ThreadOpenned === false" @click="getComments">+</button>
+    <button v-if="props.comment.kids && ThreadOpened === false" @click="getComments">+</button>
     <div v-if="currentCommentThread.length">
       <news-comment v-for="(kid, index) in currentCommentThread" :key="index" :comment="kid" />
     </div>
@@ -24,10 +24,10 @@ const props = defineProps({
 const { getCommentsOfComments } = useCommentsStore()
 const currentCommentThread = ref([])
 
-const ThreadOpenned = ref(false)
+const ThreadOpened = ref(false)
 
 const getComments = async () => {
-  ThreadOpenned.value = true
+  ThreadOpened.value = true
   for (const id of props.comment.kids) {
     const comment = await getCommentsOfComments(id)
     currentCommentThread.value.push(comment)

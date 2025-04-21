@@ -6,8 +6,8 @@
       class="container mx-auto flex flex-wrap gap-0.5"
     >
       <app-news-card
-        v-if="index < limitaion"
-        :is-load="limitaion - index <= 15"
+        v-if="index < limitation"
+        :is-load="limitation - index <= 15"
         :article-id="article"
       />
     </div>
@@ -33,22 +33,22 @@ const loaderRef = useTemplateRef('loader')
 const { newsIds } = storeToRefs(useNewsStore())
 const { getNews } = useNewsStore()
 
-const limitaion = ref(15)
+const limitation = ref(15)
 
 const addNews = () => {
-  limitaion.value = limitaion.value + 15
+  limitation.value = limitation.value + 15
 }
 
 const updateNews = async () => {
   newsIds.value = 0
   await getNews()
-  limitaion.value = 15
+  limitation.value = 15
   console.log(newsIds.value)
 }
 
 const observer = new IntersectionObserver((entries) => {
   const entry = entries[0]
-  if (entry.isIntersecting && limitaion.value < newsIds.value.length) {
+  if (entry.isIntersecting && limitation.value < newsIds.value.length) {
     addNews()
   }
 })
