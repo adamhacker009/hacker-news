@@ -19,7 +19,7 @@
         Update news list
       </button>
     </div>
-    <div ref="loader"></div>
+    <div ref="observerObj"></div>
   </div>
 </template>
 
@@ -28,7 +28,8 @@ import { storeToRefs } from 'pinia'
 import { useNewsStore } from '@/stores'
 import AppNewsCard from '@/components/newsCard/AppNewsCard.vue'
 import { onMounted, ref, useTemplateRef } from 'vue'
-const loaderRef = useTemplateRef('loader')
+
+const observerObj = useTemplateRef('observerObj')
 
 const { newsIds } = storeToRefs(useNewsStore())
 const { getNews } = useNewsStore()
@@ -54,7 +55,7 @@ const observer = new IntersectionObserver((entries) => {
 })
 
 onMounted(() => {
-  observer.observe(loaderRef.value)
+  observer.observe(observerObj.value)
 })
 
 getNews()

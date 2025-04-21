@@ -2,12 +2,13 @@
 import { useNewsStore } from '@/stores/index.js'
 import { storeToRefs } from 'pinia'
 import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useCommentsStore } from '@/stores/comments.js'
 import { dateFormater } from '@/shared/index.js'
 import NewsComment from '@/components/comment/NewsComment.vue'
 
 const route = useRoute()
+const router = useRouter()
 
 const { comments } = storeToRefs(useCommentsStore())
 
@@ -21,7 +22,7 @@ onMounted(() => {
 
 <template>
   <div class="container mx-auto mt-2">
-    <button>Back</button>
+    <button @click="router.back()">Back</button>
     <h1 class="text-4xl">{{ article.title }}</h1>
     <div class="flex items-center gap-3 mb-3">
       <h4 class="text-2xl">
@@ -45,7 +46,7 @@ onMounted(() => {
     </p>
     <div class="text-lg mt-2 mb-2" v-html="article.text"></div>
     <div v-if="comments">
-      <news-comment v-for="comment in comments" v-bind="comment.id" :comment="comment" />
+      <news-comment v-for="comment in comments" :key="comment.id" :comment="comment" />
     </div>
   </div>
 </template>

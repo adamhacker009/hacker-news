@@ -3,10 +3,10 @@
     <router-link :to="`/news/${currentArticle.id}`" class="text-2xl font-bold">{{
       currentArticle.title
     }}</router-link>
-    <div class="flex gap-2 items-center">
-      <h5 class="text-lg">{{ currentArticle.by }}</h5>
-      <h5 class="text-lg">Rating: {{ currentArticle.score }}</h5>
-      <h5 class="text-lg">Comments: {{ currentArticle.descendants }}</h5>
+    <div class="flex gap-2 items-center text-lg">
+      <h5>{{ currentArticle.by }}</h5>
+      <h5>Rating: {{ currentArticle.score }}</h5>
+      <h5>Comments: {{ currentArticle.descendants }}</h5>
     </div>
     <h5>{{ dateFormater(currentArticle.time) }}</h5>
   </div>
@@ -15,9 +15,9 @@
 <style scoped></style>
 
 <script setup>
-import { useNewsStore } from '@/stores/index.js'
-import { ref } from 'vue'
-import { dateFormater } from '@/shared/index.js'
+import { useNewsStore } from '@/stores'
+import { onUnmounted, ref } from 'vue'
+import { dateFormater } from '@/shared'
 
 const { getArticleSlim } = useNewsStore()
 
@@ -34,4 +34,7 @@ initialArticle()
 setInterval(() => {
   if (props.isLoad) initialArticle()
 }, 60000)
+onUnmounted(() => {
+  clearInterval(initialArticle)
+})
 </script>
